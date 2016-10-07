@@ -97,7 +97,6 @@ class SessionForm extends React.Component {
     return (
       <div className="login-form-container">
         <form onSubmit={this.handleSubmit} className={"login-form-box "+this.state.enter}>
-          <img src= "assets/close.png" className="close-icon" onClick={this.cancelForm} />
           { this.chooseHeader(this.props.formType) }
           <section className="session-errors">{ this.renderErrors() }</section>
           <div className="login-form">

@@ -27,7 +27,7 @@ update(property) {
   render() {
     return (
       <div className="home">
-       
+       {this.props.children}
       </div> 
     )
   }
