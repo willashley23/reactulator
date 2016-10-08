@@ -8,6 +8,7 @@ export default class Calculation extends React.Component {
     this.insertOperator = this.insertOperator.bind(this);
     this.executeCalculation = this.executeCalculation.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
+    this.displayCalculations = this.displayCalculations.bind(this);
     this.newresult;
     this.state = {
       expression: '0',
@@ -35,6 +36,19 @@ export default class Calculation extends React.Component {
       this.newresult = this.state.expression + ` ${operator} `;
       this.setState({expression: this.newresult}); 
     }
+  }
+
+  displayCalculations() {
+    console.log(this.props.calculations)
+    return (
+      <ul className="calc-board">
+        {
+          Object.keys(this.props.calculations).map( (key) => {
+            return <li>{this.props.calculations[key].expression}</li>
+          })
+        }
+      </ul>
+    )
   }
 
 // Start here. Send expression to database. In model, parse answer and...add it? You might need to add an 
@@ -72,6 +86,8 @@ export default class Calculation extends React.Component {
             <li onClick={this.clearScreen}>c</li>
           </ul>
         </div>
+        <h2>Recent Calculations</h2>
+        {this.displayCalculations()}
       </div>
     )
   }

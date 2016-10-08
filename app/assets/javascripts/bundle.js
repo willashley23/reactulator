@@ -47266,6 +47266,7 @@
 	    _this.insertOperator = _this.insertOperator.bind(_this);
 	    _this.executeCalculation = _this.executeCalculation.bind(_this);
 	    _this.clearScreen = _this.clearScreen.bind(_this);
+	    _this.displayCalculations = _this.displayCalculations.bind(_this);
 	    _this.newresult;
 	    _this.state = {
 	      expression: '0',
@@ -47298,6 +47299,24 @@
 	        this.setState({ expression: this.newresult });
 	      }
 	    }
+	  }, {
+	    key: 'displayCalculations',
+	    value: function displayCalculations() {
+	      var _this2 = this;
+	
+	      console.log(this.props.calculations);
+	      return _react2.default.createElement(
+	        'ul',
+	        { className: 'calc-board' },
+	        Object.keys(this.props.calculations).map(function (key) {
+	          return _react2.default.createElement(
+	            'li',
+	            null,
+	            _this2.props.calculations[key].expression
+	          );
+	        })
+	      );
+	    }
 	
 	    // Start here. Send expression to database. In model, parse answer and...add it? You might need to add an 
 	    // answer column to the model, set it to 0 by default, and have no validations on it. Then fetch all calculations or something
@@ -47316,7 +47335,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -47335,84 +47354,84 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('7');
+	                  return _this3.addNumberToCalculation('7');
 	                } },
 	              '7'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('8');
+	                  return _this3.addNumberToCalculation('8');
 	                } },
 	              '8'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('9');
+	                  return _this3.addNumberToCalculation('9');
 	                } },
 	              '9'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('*');
+	                  return _this3.insertOperator('*');
 	                } },
 	              '*'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('4');
+	                  return _this3.addNumberToCalculation('4');
 	                } },
 	              '4'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('5');
+	                  return _this3.addNumberToCalculation('5');
 	                } },
 	              '5'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('6');
+	                  return _this3.addNumberToCalculation('6');
 	                } },
 	              '6'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('-');
+	                  return _this3.insertOperator('-');
 	                } },
 	              '\u2013'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('1');
+	                  return _this3.addNumberToCalculation('1');
 	                } },
 	              '1'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('2');
+	                  return _this3.addNumberToCalculation('2');
 	                } },
 	              '2'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('3');
+	                  return _this3.addNumberToCalculation('3');
 	                } },
 	              '3'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('+');
+	                  return _this3.insertOperator('+');
 	                } },
 	              '+'
 	            ),
@@ -47424,7 +47443,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('/');
+	                  return _this3.insertOperator('/');
 	                } },
 	              '/'
 	            ),
@@ -47434,7 +47453,13 @@
 	              'c'
 	            )
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Recent Calculations'
+	        ),
+	        this.displayCalculations()
 	      );
 	    }
 	  }]);

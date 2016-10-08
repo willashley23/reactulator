@@ -5,6 +5,7 @@ class Api::CalculationsController < ApplicationController
 
   def create
     @calculation = Calculation.new(calculations_params)
+    @calculation.evaluateExpression
     if @calculation.save
         render :show
     else
