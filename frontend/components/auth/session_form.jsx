@@ -30,7 +30,7 @@ class SessionForm extends React.Component {
 
   redirectIfLoggedIn(){
     if (this.props.loggedIn){
-      hashHistory.push("/home");
+      hashHistory.push("/calc");
     }
   }
 

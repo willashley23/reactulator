@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import {requestCalculations, receiveCalculations, createCalculation}'../../actions/calculation_actions';
+import { requestCalculations, receiveCalculations, createCalculation } from '../../actions/calculation_actions';
 import Calculation from './calculation';
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
   return {
     calculations: state.calculations,
     currentUser: state.session.currentUser
   }
-});
+};
 
 const mapDispatchToProps = (dispatch) => ({
   createCalculation: (calculation) => {dispatch(createCalculation(calculation))},

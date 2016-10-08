@@ -13,3 +13,40 @@
  *= require_tree .
  *= require_self
  */
+
+.calculator-main {
+  margin-top: 100px;
+}
+
+.flex-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.results-bar {
+  font-size: 38px;
+  border: 1px solid #282C35;
+  margin-left: 2.5%;
+  width: 86%;
+  padding-left: 20px;
+}
+
+.numbers {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+li {
+  /* Use flexbox to make a 3*4 grid. */
+  font-size: 35px;
+  width: 19%;
+  margin: 2.5%;
+  display: inline-block;
+  border: 1px solid #282C35;
+  text-align: center;
+}
+
+#equals {
+  width: 44%;
+}

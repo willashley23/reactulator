@@ -5,6 +5,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './app';
 import HomeContainer from './home/home_container';
 import SessionFormContainer from './auth/session_form_container';
+import CalculationContainer from './calc/calculation_container';
 
 class AppRouter extends React.Component{
   constructor(props){
@@ -49,6 +50,7 @@ class AppRouter extends React.Component{
             <Route path="login" component={ SessionFormContainer } />
             <Route path="signup" component={ SessionFormContainer } />
           </Route>
+          <Route path="calc" component={ CalculationContainer }/>
         </Route>
       </Router>
     );
