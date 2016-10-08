@@ -15,13 +15,8 @@ export default class Calculation extends React.Component {
     }
   }
 
-  // return e => this.setState({[property]: e.target.value});
-
   addNumberToCalculation(num) {
-    // debugger
-    var newState = {};
     if (this.state.expression === "0") {
-      // newState[expression] = num;
       this.setState({expression: num});   
     } else {
       this.newresult = this.state.expression + num;
@@ -32,8 +27,6 @@ export default class Calculation extends React.Component {
   }
 
   insertOperator(operator) {
-    var newState = {};
-    debugger
     if (this.state.expression === "0"){
       alert("Enter an expression first!")
     } else if (this.state.expression.split('').includes(operator)) {
@@ -44,6 +37,9 @@ export default class Calculation extends React.Component {
     }
   }
 
+// Start here. Send expression to database. In model, parse answer and...add it? You might need to add an 
+// answer column to the model, set it to 0 by default, and have no validations on it. Then fetch all calculations or something
+// and render them below the calculator. 
   executeCalculation() {
     this.props.createCalculation( { calculation: { expression: this.state.expression, user_id: this.state.user_id } });  
   }
@@ -62,7 +58,7 @@ export default class Calculation extends React.Component {
             <li onClick={() => this.addNumberToCalculation('7')}>7</li>
             <li onClick={() => this.addNumberToCalculation('8')}>8</li>
             <li onClick={() => this.addNumberToCalculation('9')}>9</li>
-            <li onClick={() => this.insertOperator('-')}>*</li>
+            <li onClick={() => this.insertOperator('*')}>*</li>
             <li onClick={() => this.addNumberToCalculation('4')}>4</li>
             <li onClick={() => this.addNumberToCalculation('5')}>5</li>
             <li onClick={() => this.addNumberToCalculation('6')}>6</li>
@@ -70,9 +66,9 @@ export default class Calculation extends React.Component {
             <li onClick={() => this.addNumberToCalculation('7')}>1</li>
             <li onClick={() => this.addNumberToCalculation('8')}>2</li>
             <li onClick={() => this.addNumberToCalculation('9')}>3</li>
-            <li onClick={() => this.insertOperator('-')}>+</li>
+            <li onClick={() => this.insertOperator('+')}>+</li>
             <li id="equals" onClick={this.executeCalculation}>=</li>
-            <li onClick={() => this.insertOperator('-')}>/</li>
+            <li onClick={() => this.insertOperator('/')}>/</li>
             <li onClick={this.clearScreen}>c</li>
           </ul>
         </div>

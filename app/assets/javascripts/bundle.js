@@ -47271,15 +47271,10 @@
 	    return _this;
 	  }
 	
-	  // return e => this.setState({[property]: e.target.value});
-	
 	  _createClass(Calculation, [{
 	    key: 'addNumberToCalculation',
 	    value: function addNumberToCalculation(num) {
-	      // debugger
-	      var newState = {};
 	      if (this.state.expression === "0") {
-	        // newState[expression] = num;
 	        this.setState({ expression: num });
 	      } else {
 	        this.newresult = this.state.expression + num;
@@ -47291,8 +47286,6 @@
 	  }, {
 	    key: 'insertOperator',
 	    value: function insertOperator(operator) {
-	      var newState = {};
-	      debugger;
 	      if (this.state.expression === "0") {
 	        alert("Enter an expression first!");
 	      } else if (this.state.expression.split('').includes(operator)) {
@@ -47302,6 +47295,11 @@
 	        this.setState({ expression: this.newresult });
 	      }
 	    }
+	
+	    // Start here. Send expression to database. In model, parse answer and...add it? You might need to add an 
+	    // answer column to the model, set it to 0 by default, and have no validations on it. Then fetch all calculations or something
+	    // and render them below the calculator. 
+	
 	  }, {
 	    key: 'executeCalculation',
 	    value: function executeCalculation() {
@@ -47355,7 +47353,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('-');
+	                  return _this2.insertOperator('*');
 	                } },
 	              '*'
 	            ),
@@ -47411,7 +47409,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('-');
+	                  return _this2.insertOperator('+');
 	                } },
 	              '+'
 	            ),
@@ -47423,7 +47421,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.insertOperator('-');
+	                  return _this2.insertOperator('/');
 	                } },
 	              '/'
 	            ),
