@@ -21,6 +21,6 @@ export const createCalculation = function(calculation, success, error){
     url: 'api/calculations',
     data: calculation,
     success,
-    error
+    error: ()=> console.log("Could not compute.")
   });
 };

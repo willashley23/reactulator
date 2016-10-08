@@ -39926,7 +39926,7 @@
 	          break;
 	
 	        case _calculation_actions.CREATE_CALCULATION:
-	          (0, _calculation_api_util.createCalculation)(action.event, receiveNewCalculationSuccess, failCallback);
+	          (0, _calculation_api_util.createCalculation)(action.calculation, receiveNewCalculationSuccess, failCallback);
 	          break;
 	
 	        case _calculation_actions.REQUEST_CALCULATION:
@@ -39976,7 +39976,9 @@
 	    url: 'api/calculations',
 	    data: calculation,
 	    success: success,
-	    error: error
+	    error: function error() {
+	      return console.log("Could not compute.");
+	    }
 	  });
 	};
 
@@ -40973,7 +40975,8 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _session_form_container2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _session_form_container2.default })
 	          ),
-	          _react2.default.createElement(_reactRouter.Route, { path: 'calc', component: _calculation_container2.default })
+	          _react2.default.createElement(_reactRouter.Route, { path: 'calc', component: _calculation_container2.default }),
+	          _react2.default.createElement(_reactRouter.Route, { path: 'calc/new', component: _calculation_container2.default, onEnter: this._ensureLoggedIn })
 	        )
 	      );
 	    }
@@ -47388,21 +47391,21 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('7');
+	                  return _this2.addNumberToCalculation('1');
 	                } },
 	              '1'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('8');
+	                  return _this2.addNumberToCalculation('2');
 	                } },
 	              '2'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this2.addNumberToCalculation('9');
+	                  return _this2.addNumberToCalculation('3');
 	                } },
 	              '3'
 	            ),

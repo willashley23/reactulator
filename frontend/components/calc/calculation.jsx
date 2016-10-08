@@ -63,9 +63,9 @@ export default class Calculation extends React.Component {
             <li onClick={() => this.addNumberToCalculation('5')}>5</li>
             <li onClick={() => this.addNumberToCalculation('6')}>6</li>
             <li onClick={() => this.insertOperator('-')}>–</li>
-            <li onClick={() => this.addNumberToCalculation('7')}>1</li>
-            <li onClick={() => this.addNumberToCalculation('8')}>2</li>
-            <li onClick={() => this.addNumberToCalculation('9')}>3</li>
+            <li onClick={() => this.addNumberToCalculation('1')}>1</li>
+            <li onClick={() => this.addNumberToCalculation('2')}>2</li>
+            <li onClick={() => this.addNumberToCalculation('3')}>3</li>
             <li onClick={() => this.insertOperator('+')}>+</li>
             <li id="equals" onClick={this.executeCalculation}>=</li>
             <li onClick={() => this.insertOperator('/')}>/</li>

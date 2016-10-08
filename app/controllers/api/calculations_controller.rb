@@ -4,11 +4,11 @@ class Api::CalculationsController < ApplicationController
   end
 
   def create
-    @calculations = Calculation.new(calculations_params)
-    if @calculations.save
+    @calculation = Calculation.new(calculations_params)
+    if @calculation.save
         render :show
     else
-      render json: @calculations.errors.full_messages, status: 422
+      render json: @calculation.errors.full_messages, status: 422
     end
   end
 
@@ -20,6 +20,6 @@ class Api::CalculationsController < ApplicationController
   private
 
   def calculations_params
-    params.require(:calculations).permit(:expression, :user_id)
+    params.require(:calculation).permit(:expression, :user_id)
   end
 end

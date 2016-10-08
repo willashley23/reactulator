@@ -38,7 +38,7 @@ const CalculationMiddleware = ({getState, dispatch}) => next => action => {
       break;
 
     case CREATE_CALCULATION:
-      createCalculation(action.event, receiveNewCalculationSuccess, failCallback)
+      createCalculation(action.calculation, receiveNewCalculationSuccess, failCallback)
       break;
 
     case REQUEST_CALCULATION:

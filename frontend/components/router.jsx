@@ -51,6 +51,7 @@ class AppRouter extends React.Component{
             <Route path="signup" component={ SessionFormContainer } />
           </Route>
           <Route path="calc" component={ CalculationContainer }/>
+          <Route path="calc/new" component={ CalculationContainer } onEnter={this._ensureLoggedIn } />
         </Route>
       </Router>
     );
