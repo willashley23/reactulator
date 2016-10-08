@@ -47230,7 +47230,7 @@
 /* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -47250,107 +47250,187 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _class = function (_React$Component) {
-	  _inherits(_class, _React$Component);
+	var Calculation = function (_React$Component) {
+	  _inherits(Calculation, _React$Component);
 	
-	  function _class(props) {
-	    _classCallCheck(this, _class);
+	  function Calculation(props) {
+	    _classCallCheck(this, Calculation);
 	
-	    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+	    // Permanently bind methods
+	    var _this = _possibleConstructorReturn(this, (Calculation.__proto__ || Object.getPrototypeOf(Calculation)).call(this, props));
+	
+	    _this.addNumberToCalculation = _this.addNumberToCalculation.bind(_this);
+	    _this.insertOperator = _this.insertOperator.bind(_this);
+	    _this.executeCalculation = _this.executeCalculation.bind(_this);
+	    _this.clearScreen = _this.clearScreen.bind(_this);
+	    _this.newresult;
+	    _this.state = {
+	      expression: '0',
+	      user_id: _this.props.currentUser.id
+	    };
+	    return _this;
 	  }
 	
-	  _createClass(_class, [{
-	    key: "render",
+	  // return e => this.setState({[property]: e.target.value});
+	
+	  _createClass(Calculation, [{
+	    key: 'addNumberToCalculation',
+	    value: function addNumberToCalculation(num) {
+	      // debugger
+	      var newState = {};
+	      if (this.state.expression === "0") {
+	        // newState[expression] = num;
+	        this.setState({ expression: num });
+	      } else {
+	        this.newresult = this.state.expression + num;
+	        this.setState({ expression: this.newresult });
+	      }
+	      console.log(this.state);
+	      console.log(this.state.expression);
+	    }
+	  }, {
+	    key: 'insertOperator',
+	    value: function insertOperator(operator) {
+	      var newState = {};
+	      debugger;
+	      if (this.state.expression === "0") {
+	        alert("Enter an expression first!");
+	      } else if (this.state.expression.split('').includes(operator)) {
+	        alert("Only one operator per expression.");
+	      } else {
+	        this.newresult = this.state.expression + (' ' + operator + ' ');
+	        this.setState({ expression: this.newresult });
+	      }
+	    }
+	  }, {
+	    key: 'executeCalculation',
+	    value: function executeCalculation() {
+	      this.props.createCalculation({ calculation: { expression: this.state.expression, user_id: this.state.user_id } });
+	    }
+	  }, {
+	    key: 'clearScreen',
+	    value: function clearScreen() {
+	      this.setState({ expression: '0' });
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
 	
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "calculator-main" },
+	        'div',
+	        { className: 'calculator-main' },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "flex-wrapper" },
+	          'div',
+	          { className: 'flex-wrapper' },
 	          _react2.default.createElement(
-	            "ul",
-	            { className: "numbers" },
+	            'ul',
+	            { className: 'numbers' },
 	            _react2.default.createElement(
-	              "div",
-	              { className: "results-bar" },
-	              "0"
+	              'div',
+	              { className: 'results-bar' },
+	              this.state.expression
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "7"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('7');
+	                } },
+	              '7'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "8"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('8');
+	                } },
+	              '8'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "9"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('9');
+	                } },
+	              '9'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "*"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.insertOperator('-');
+	                } },
+	              '*'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "4"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('4');
+	                } },
+	              '4'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "5"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('5');
+	                } },
+	              '5'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "6"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('6');
+	                } },
+	              '6'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "\u2013"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.insertOperator('-');
+	                } },
+	              '\u2013'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "1"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('7');
+	                } },
+	              '1'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "2"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('8');
+	                } },
+	              '2'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "3"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.addNumberToCalculation('9');
+	                } },
+	              '3'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "+"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.insertOperator('-');
+	                } },
+	              '+'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              { id: "equals" },
-	              "="
+	              'li',
+	              { id: 'equals', onClick: this.executeCalculation },
+	              '='
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "/"
+	              'li',
+	              { onClick: function onClick() {
+	                  return _this2.insertOperator('-');
+	                } },
+	              '/'
 	            ),
 	            _react2.default.createElement(
-	              "li",
-	              null,
-	              "c"
+	              'li',
+	              { onClick: this.clearScreen },
+	              'c'
 	            )
 	          )
 	        )
@@ -47358,10 +47438,10 @@
 	    }
 	  }]);
 	
-	  return _class;
+	  return Calculation;
 	}(_react2.default.Component);
 	
-	exports.default = _class;
+	exports.default = Calculation;
 
 /***/ }
 /******/ ]);
