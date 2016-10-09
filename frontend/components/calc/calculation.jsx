@@ -9,6 +9,7 @@ export default class Calculation extends React.Component {
     this.executeCalculation = this.executeCalculation.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
     this.displayCalculations = this.displayCalculations.bind(this);
+    this.displayCalculationOnScreen = this.displayCalculationOnScreen.bind(this);
     this.newresult;
     this.state = {
       expression: '0',
@@ -16,15 +17,21 @@ export default class Calculation extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.requestCalculations();
+  }
+
   addNumberToCalculation(num) {
     if (this.state.expression === "0") {
       this.setState({expression: num});   
-    } else {
+    } else if (this.state.expression[0] === "-") {
+      alert("The calculator does not support negative integers at this time.")
+      this.clearScreen();
+    } 
+      else {
       this.newresult = this.state.expression + num;
       this.setState({expression: this.newresult});
     }
-    console.log(this.state)
-    console.log(this.state.expression)
   }
 
   insertOperator(operator) {
@@ -39,27 +46,50 @@ export default class Calculation extends React.Component {
   }
 
   displayCalculations() {
-    console.log(this.props.calculations)
-    return (
-      <ul className="calc-board">
-        {
-          Object.keys(this.props.calculations).map( (key) => {
-            return <li>{this.props.calculations[key].expression}</li>
-          })
-        }
-      </ul>
-    )
+    let keys = Object.keys(this.props.calculations)
+    let mostRecentCalculations;
+    if (keys.length > 10) {
+      mostRecentCalculations = keys.slice(keys.length-10, keys.length+1)
+      return (
+        <ul className="calc-board">
+          {
+            mostRecentCalculations.map( (key) => {
+              return <li className="calculation">{ this.props.calculations[key].expression }</li>
+            })
+          }
+        </ul>
+      )
+    } else {
+        return (
+          <ul className="calc-board">
+            {
+              Object.keys(this.props.calculations).map( (key) => {
+                return <li className="calculation">{ this.props.calculations[key].expression }</li>
+              })
+            }
+          </ul>
+        )
+    }
   }
 
-// Start here. Send expression to database. In model, parse answer and...add it? You might need to add an 
-// answer column to the model, set it to 0 by default, and have no validations on it. Then fetch all calculations or something
-// and render them below the calculator. 
   executeCalculation() {
-    this.props.createCalculation( { calculation: { expression: this.state.expression, user_id: this.state.user_id } });  
+    this.props.createCalculation( { calculation: { expression: this.state.expression, user_id: this.state.user_id } });
+    window.setTimeout( () => {
+      this.displayCalculationOnScreen();
+    }, 70);
   }
 
   clearScreen() {
     this.setState({expression: '0'})
+  }
+
+  displayCalculationOnScreen() {
+    // Use regular expression to parse the answer after the equals sign.
+    let ans = /[-]?\d*$/
+    let keys = Object.keys(this.props.calculations);
+    let calcs = this.props.calculations;
+    let exp = ans.exec(calcs[keys.length].expression)[0]
+    this.setState({expression: exp})
   }
 
   render() {

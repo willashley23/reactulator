@@ -2,7 +2,7 @@ class Calculation < ApplicationRecord
   belongs_to :user
 
   def evaluateExpression
-    lhs = self.expression.match(/^\d*/)[0].to_i
+    lhs = self.expression.match(/^[-]?\d*/)[0].to_i
     operator = self.expression.match(/[+-\/\*]/)[0]
     rhs =  self.expression.match(/\d*$/)[0].to_i
     case operator

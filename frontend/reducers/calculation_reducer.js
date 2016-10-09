@@ -8,7 +8,6 @@ import {
 } from '../actions/calculation_actions';
 
 const CalculationReducer = (state = {}, action) => {
-
   switch (action.type) {
 
     case RECEIVE_CALCULATIONS:

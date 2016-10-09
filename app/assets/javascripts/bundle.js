@@ -39449,7 +39449,6 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	  var action = arguments[1];
 	
-	
 	  switch (action.type) {
 	
 	    case _calculation_actions.RECEIVE_CALCULATIONS:
@@ -39479,7 +39478,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var RECEIVE_CALCULATIONS = exports.RECEIVE_CALCULATIONS = "RECEIVE_EVENTS";
+	var RECEIVE_CALCULATIONS = exports.RECEIVE_CALCULATIONS = "RECEIVE_CALCULATIONS";
 	var RECEIVE_CALCULATION = exports.RECEIVE_CALCULATION = "RECEIVE_CALCULATION";
 	var REQUEST_CALCULATIONS = exports.REQUEST_CALCULATIONS = "REQUEST_CALCULATIONS";
 	var REQUEST_CALCULATION = exports.REQUEST_CALCULATION = "REQUEST_CALCULATION";
@@ -46858,12 +46857,12 @@
 	    _react2.default.createElement(
 	      _reactRouter.Link,
 	      { to: '/home/login', activeClassName: 'current' },
-	      'LOGIN '
+	      'Login '
 	    ),
 	    _react2.default.createElement(
 	      _reactRouter.Link,
 	      { to: '/home/signup', activeClassName: 'current' },
-	      ' SIGN UP'
+	      ' Sign Up'
 	    )
 	  );
 	};
@@ -46875,12 +46874,7 @@
 	    _react2.default.createElement(
 	      _reactRouter.Link,
 	      { to: '/home', className: 'sign-out', activeClassName: 'current', onClick: logout },
-	      'SIGN OUT'
-	    ),
-	    _react2.default.createElement(
-	      _reactRouter.Link,
-	      { to: '/users/' + currentUser.id, className: 'user-profile-link', activeClassName: 'current' },
-	      'MY PROFILE'
+	      'Sign Out'
 	    )
 	  );
 	};
@@ -46896,7 +46890,7 @@
 	      _react2.default.createElement(
 	        _reactRouter.Link,
 	        { to: '/home', className: 'logo' },
-	        'Pisces'
+	        'Reactulator'
 	      ),
 	      _react2.default.createElement(
 	        'section',
@@ -46907,16 +46901,35 @@
 	  } else {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'navbar' },
+	      null,
 	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { to: '/home', className: 'logo' },
-	        'Pisces'
+	        'div',
+	        { className: 'navbar' },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/home', className: 'logo' },
+	          'Reactulator'
+	        ),
+	        _react2.default.createElement(
+	          'section',
+	          { className: 'sessionLinks' },
+	          sessionLinks()
+	        )
 	      ),
 	      _react2.default.createElement(
-	        'section',
-	        { className: 'sessionLinks' },
-	        sessionLinks()
+	        'h2',
+	        { className: 'banner' },
+	        'The Online Calculator Made With ',
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          'React'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'h3',
+	        null,
+	        'Login to see more...'
 	      )
 	    );
 	  }
@@ -47110,7 +47123,7 @@
 	        null,
 	        this.props.errors.map(function (error, i) {
 	          return _react2.default.createElement(
-	            'li',
+	            'h2',
 	            { key: 'error-' + i },
 	            error
 	          );
@@ -47157,15 +47170,7 @@
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement('input', { type: 'submit', value: 'Submit', className: 'submitButton' })
 	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'submit form-section' },
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.handleGuest, className: 'guest-button' },
-	              'Guest Login'
-	            )
-	          )
+	          _react2.default.createElement('div', { className: 'submit form-section' })
 	        )
 	      );
 	    }
@@ -47267,6 +47272,7 @@
 	    _this.executeCalculation = _this.executeCalculation.bind(_this);
 	    _this.clearScreen = _this.clearScreen.bind(_this);
 	    _this.displayCalculations = _this.displayCalculations.bind(_this);
+	    _this.displayCalculationOnScreen = _this.displayCalculationOnScreen.bind(_this);
 	    _this.newresult;
 	    _this.state = {
 	      expression: '0',
@@ -47276,16 +47282,22 @@
 	  }
 	
 	  _createClass(Calculation, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.requestCalculations();
+	    }
+	  }, {
 	    key: 'addNumberToCalculation',
 	    value: function addNumberToCalculation(num) {
 	      if (this.state.expression === "0") {
 	        this.setState({ expression: num });
+	      } else if (this.state.expression[0] === "-") {
+	        alert("The calculator does not support negative integers at this time.");
+	        this.clearScreen();
 	      } else {
 	        this.newresult = this.state.expression + num;
 	        this.setState({ expression: this.newresult });
 	      }
-	      console.log(this.state);
-	      console.log(this.state.expression);
 	    }
 	  }, {
 	    key: 'insertOperator',
@@ -47304,28 +47316,44 @@
 	    value: function displayCalculations() {
 	      var _this2 = this;
 	
-	      console.log(this.props.calculations);
-	      return _react2.default.createElement(
-	        'ul',
-	        { className: 'calc-board' },
-	        Object.keys(this.props.calculations).map(function (key) {
-	          return _react2.default.createElement(
-	            'li',
-	            null,
-	            _this2.props.calculations[key].expression
-	          );
-	        })
-	      );
+	      var keys = Object.keys(this.props.calculations);
+	      var mostRecentCalculations = void 0;
+	      if (keys.length > 10) {
+	        mostRecentCalculations = keys.slice(keys.length - 10, keys.length + 1);
+	        return _react2.default.createElement(
+	          'ul',
+	          { className: 'calc-board' },
+	          mostRecentCalculations.map(function (key) {
+	            return _react2.default.createElement(
+	              'li',
+	              { className: 'calculation' },
+	              _this2.props.calculations[key].expression
+	            );
+	          })
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'ul',
+	          { className: 'calc-board' },
+	          Object.keys(this.props.calculations).map(function (key) {
+	            return _react2.default.createElement(
+	              'li',
+	              { className: 'calculation' },
+	              _this2.props.calculations[key].expression
+	            );
+	          })
+	        );
+	      }
 	    }
-	
-	    // Start here. Send expression to database. In model, parse answer and...add it? You might need to add an 
-	    // answer column to the model, set it to 0 by default, and have no validations on it. Then fetch all calculations or something
-	    // and render them below the calculator. 
-	
 	  }, {
 	    key: 'executeCalculation',
 	    value: function executeCalculation() {
+	      var _this3 = this;
+	
 	      this.props.createCalculation({ calculation: { expression: this.state.expression, user_id: this.state.user_id } });
+	      window.setTimeout(function () {
+	        _this3.displayCalculationOnScreen();
+	      }, 70);
 	    }
 	  }, {
 	    key: 'clearScreen',
@@ -47333,9 +47361,19 @@
 	      this.setState({ expression: '0' });
 	    }
 	  }, {
+	    key: 'displayCalculationOnScreen',
+	    value: function displayCalculationOnScreen() {
+	      // Use regular expression to parse the answer after the equals sign.
+	      var ans = /[-]?\d*$/;
+	      var keys = Object.keys(this.props.calculations);
+	      var calcs = this.props.calculations;
+	      var exp = ans.exec(calcs[keys.length].expression)[0];
+	      this.setState({ expression: exp });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -47354,84 +47392,84 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('7');
+	                  return _this4.addNumberToCalculation('7');
 	                } },
 	              '7'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('8');
+	                  return _this4.addNumberToCalculation('8');
 	                } },
 	              '8'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('9');
+	                  return _this4.addNumberToCalculation('9');
 	                } },
 	              '9'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.insertOperator('*');
+	                  return _this4.insertOperator('*');
 	                } },
 	              '*'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('4');
+	                  return _this4.addNumberToCalculation('4');
 	                } },
 	              '4'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('5');
+	                  return _this4.addNumberToCalculation('5');
 	                } },
 	              '5'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('6');
+	                  return _this4.addNumberToCalculation('6');
 	                } },
 	              '6'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.insertOperator('-');
+	                  return _this4.insertOperator('-');
 	                } },
 	              '\u2013'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('1');
+	                  return _this4.addNumberToCalculation('1');
 	                } },
 	              '1'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('2');
+	                  return _this4.addNumberToCalculation('2');
 	                } },
 	              '2'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.addNumberToCalculation('3');
+	                  return _this4.addNumberToCalculation('3');
 	                } },
 	              '3'
 	            ),
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.insertOperator('+');
+	                  return _this4.insertOperator('+');
 	                } },
 	              '+'
 	            ),
@@ -47443,7 +47481,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              { onClick: function onClick() {
-	                  return _this3.insertOperator('/');
+	                  return _this4.insertOperator('/');
 	                } },
 	              '/'
 	            ),
